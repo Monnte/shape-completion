@@ -1,4 +1,9 @@
-# Generative model for 3D shape completion
+
+# 3D Shape Completion
+
+| || |
+|---------|---------|---------|
+| ![bed condition](./figs/32_64_bed_cond.png) | ![bed prediction](./figs/32_64_bed_pred.png) | ![bed ground truth](./figs/32_64_bed_gt.png) |
 
 The repository contains code for training and sampling from a generative model for 3D shape completion. The model implemented in this repository is based on the diffusion model proposed in the paper [DiffComplete: Diffusion-based Generative 3D Shape Completion](https://arxiv.org/pdf/2306.16329.pdf).
 
@@ -17,8 +22,11 @@ Pretrained models can be downloaded from [this link](https://drive.google.com/dr
 ```bash
 virtualenv -p python3.8 venv
 source venv/bin/activate
+export PYTHONPATH="${PYTHONPATH}:${pwd}"
 pip install -r requirements.txt
 ```
+
+**Note:** _CUDA_ is required to run the code (because of evaluation part).
 
 ## Data generation
 
@@ -110,11 +118,22 @@ python ./scripts/train.py --batch_size 32 \
 
 ## Sampling
 
-To sample one shape from the model run the following command:
+To sample one shape from the mesh model run the following command:
 
 ```bash
 python ./scripts/sample.py --model_path MODEL_PATH \
  --sample_path SAMPLE_PATH \ # Condition
+ --input_mesh True
+ --condition_size 32 \ # Expected condition size
+ --output_size 32 \ # Expected output size
+```
+
+or using .npy file as input:
+
+```bash
+python ./scripts/sample.py --model_path MODEL_PATH \
+ --sample_path SAMPLE_PATH \ # Condition
+ --input_mesh False
  --output_size 32 \ # Expected output size
 ```
 
@@ -128,3 +147,20 @@ python ./scripts/evaluate_dataset.py \
  --file_path "./datasets/objaverse-furniture/test.txt"
  --model_path MODEL_PATH
 ```
+
+## Results
+
+Evaluation on _TEST_ dataset:
+| Metric | ****BaseComplete**** | ****BaseComplete**** + **ROI mask** |
+|---------|---------|---------|
+| CD | 3.53 | 2.86 |
+| IoU | 81.62 | 84.77 |
+| L1 | 0.0264 | 0.0187 |
+
+**Note:** CD and IoU are scaled by 100. Lower values are better for CD and L1, while higher values are better for IoU.
+
+| Condition | Prediction | Ground Truth |
+|---------|---------|---------|
+| ![bathub condition](./figs/32_64_bathub_cond.png) | ![bathub predicted](./figs/32_64_bathub_pred.png) | ![bathub ground truth](./figs/32_64_bathub_gt.png) |
+| ![couch condition](./figs/32_64_couch_cond.png) | ![couch prediction](./figs/32_64_couch_pred.png) | ![couch ground truth](./figs/32_64_couch_gt.png) |
+| ![bed condition](./figs/32_64_bed_cond.png) | ![bed prediction](./figs/32_64_bed_pred.png) | ![bed ground truth](./figs/32_64_bed_gt.png) |

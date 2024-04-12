@@ -133,7 +133,7 @@ class DatasetGenerator:
         """
         obj_mesh = trimesh.creation.box(extents=[0.01, 0.01, 0.01])
         obj_mesh.apply_translation([0, 0, 0])
-        diff_mesh = mesh.difference(obj_mesh)
+        diff_mesh = mesh.difference(obj_mesh, check_volume=False)
         if len(diff_mesh.vertices) == 0:
             return True
         return False
@@ -201,7 +201,7 @@ class DatasetGenerator:
             obj_mesh = self.random_translate(obj_mesh, mesh)
             obj_mesh = self.random_rotate(obj_mesh)
 
-            diff_mesh = diff_mesh.difference(obj_mesh)
+            diff_mesh = diff_mesh.difference(obj_mesh, check_volume=False)
 
         # skip if mesh is empty
         if len(diff_mesh.vertices) == 0:

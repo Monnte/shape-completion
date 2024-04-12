@@ -325,6 +325,20 @@ class DiffCompelete(nn.Module):
         channel_mult=(2, 4, 4, 4)
         dims=3
 
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.dropout = dropout
+        self.conv_resample = conv_resample
+        self.use_checkpoint = use_checkpoint
+        self.num_heads = num_heads
+        self.use_scale_shift_norm = use_scale_shift_norm
+        self.attention_resolutions = attention_resolutions
+        self.in_scale_factor = in_scale_factor
+        
+        self.channel_mult = channel_mult
+        self.num_res_blocks = num_res_blocks
+        self.model_channels = model_channels
+        
         logger.log(f"""Model Parameters:
             in_channels: {self.in_channels}
             out_channels: {self.out_channels}
@@ -341,19 +355,6 @@ class DiffCompelete(nn.Module):
             model_channels: {self.model_channels}
         """)
 
-        self.in_channels = in_channels
-        self.out_channels = out_channels
-        self.dropout = dropout
-        self.conv_resample = conv_resample
-        self.use_checkpoint = use_checkpoint
-        self.num_heads = num_heads
-        self.use_scale_shift_norm = use_scale_shift_norm
-        self.attention_resolutions = attention_resolutions
-        self.in_scale_factor = in_scale_factor
-        
-        self.channel_mult = channel_mult
-        self.num_res_blocks = num_res_blocks
-        self.model_channels = model_channels
 
         time_embed_dim = model_channels * 4
         self.time_embed = nn.Sequential(
