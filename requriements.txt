@@ -1,0 +1,10 @@
+objaverse
+trimesh
+mesh2sdf
+manifold3d
+torch 
+torchvision 
+torchaudio
+blobfile
+PyMCubes
+Ninja
