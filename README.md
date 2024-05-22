@@ -1,6 +1,8 @@
 
 # 3D Shape Completion
 
+See the [GENERATIVE MODELS FOR 3D SHAPE COMPLETION](https://drive.google.com/file/d/10-bWIvtXW_QMZn2NY1VrrYPnjzi7fgJG/view?usp=sharing) paper.
+
 | || |
 |---------|---------|---------|
 | ![bed condition](./figs/32_64_bed_cond.png) | ![bed prediction](./figs/32_64_bed_pred.png) | ![bed ground truth](./figs/32_64_bed_gt.png) |
